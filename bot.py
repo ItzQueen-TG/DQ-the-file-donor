@@ -17,7 +17,9 @@ from typing import Union, Optional, AsyncGenerator
 from pyrogram import types
 from Script import script 
 from datetime import date, datetime 
-import pytz
+import pytz 
+from plugins import web_server
+from aiohttp import web
 
 class Bot(Client):
 
@@ -49,6 +51,10 @@ class Bot(Client):
         tz = pytz.timezone('Asia/Kolkata')
         today = date.today()
         now = datetime.now(tz)
+        app = web.AppRunner(await web_server()) 
+        await app.setup() 
+        bind_address = "0.0.0.0"
+        await web.TCPSite(app, bind_address, PORT).start()
         time = now.strftime("%H:%M:%S %p")
         await self.send_message(chat_id=LOG_CHANNEL, text=script.RESTART_TXT.format(today, time))
 
