@@ -261,7 +261,7 @@ async def language_check(bot, query):
     if not movie:
         return await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name), show_alert=True)
     if language != "home":
-        movie = f"{_, userid, language = query.data.split("#")movie} {language}"
+        movie = f"{movie} {language}"
     files, offset, total_results = await get_search_results(query.message.chat.id, movie, offset=0, filter=True)
     if files:
         settings = await get_settings(query.message.chat.id)
